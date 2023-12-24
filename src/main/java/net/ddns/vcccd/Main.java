@@ -22,7 +22,10 @@ public class Main extends JavaPlugin {
 		this.saveDefaultConfig(); //Used to save configuration
 		
 		//Code for loading commands
-		this.getCommand("test").setExecutor(new Test(this));
+		this.getCommand("test").setExecutor(new Test());
+		
+		//Code for registering for events
+		getServer().getPluginManager().registerEvents(new MainGUIEvents(), this);
 		
 	}
 	
