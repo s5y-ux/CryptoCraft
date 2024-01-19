@@ -18,6 +18,7 @@ public class MainGUIEvents implements Listener {
 	@EventHandler
 	public void onGlassPaneClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
+		try {
 		if(event.getView().getTitle().equals("Cryptocurrency")) {
 			ItemStack ClickedItem = event.getCurrentItem();
 			if(checkMaterial(ClickedItem, Material.RED_STAINED_GLASS_PANE)) {
@@ -38,6 +39,9 @@ public class MainGUIEvents implements Listener {
 				player.openInventory(new CoinGUI(ClickedItem).getCoinInventory());
 			}
 		} 
+	} catch (Exception e) {
+		assert true;
+	}
 	}
 
 }

@@ -1,6 +1,8 @@
 package net.ddns.vcccd;
 
 import net.ddns.vcccd.MainGUI;
+import net.milkbowl.vault.economy.Economy;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,6 +17,8 @@ public class Test implements CommandExecutor{
 			MainGUI GUI = new MainGUI();
 			Player player = (Player) sender;
 			player.openInventory(GUI.getGUI());
+		
+
 			
 		}
 		return(true);

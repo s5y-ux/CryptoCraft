@@ -11,10 +11,20 @@ import net.md_5.bungee.api.ChatColor;
 
 public class CryptoMenuOption {
 	
-	@SuppressWarnings("unused")
 	private ItemStack ItemRepresentation;
 	
+	private double ConvertDouble(Map<?, ?> map, String parameter) {
+		double temp = Float.parseFloat(map.get(parameter).toString());
+		temp = Math.round(temp * 100.0) / 100.0;
+		return(temp);
+	}
+	
 	public CryptoMenuOption(Map<?, ?> CoinMap) {
+		double price, cap, change;
+		price = ConvertDouble(CoinMap, "priceUsd");
+		cap = ConvertDouble(CoinMap, "marketCapUsd");
+		change = ConvertDouble(CoinMap, "changePercent24Hr");
+
 		//Creates an ItemStack as a Chest
         ItemStack value = new ItemStack(Material.GOLD_NUGGET);
 
@@ -29,12 +39,12 @@ public class CryptoMenuOption {
         Lore.add(ChatColor.WHITE + "Symbol: " + ChatColor.AQUA + CoinMap.get("symbol").toString());
         Lore.add(ChatColor.WHITE + "Rank: " + ChatColor.AQUA + CoinMap.get("rank").toString());
         Lore.add(ChatColor.BLACK + ".");
-        Lore.add(ChatColor.WHITE + "Price: " + ChatColor.GREEN + "$" + CoinMap.get("priceUsd").toString());
-        Lore.add(ChatColor.WHITE + "Market Cap: " + ChatColor.DARK_GREEN + "$" + CoinMap.get("marketCapUsd").toString());
+        Lore.add(ChatColor.WHITE + "Price: " + ChatColor.GREEN + "$" + Double.toString(price));
+        Lore.add(ChatColor.WHITE + "Market Cap: " + ChatColor.DARK_GREEN + "$" + Double.toString(cap));
         if (Float.parseFloat(CoinMap.get("changePercent24Hr").toString()) < 0) {
-            Lore.add(ChatColor.WHITE + "Percent Change: " + ChatColor.RED + "%" + CoinMap.get("changePercent24Hr").toString());
+            Lore.add(ChatColor.WHITE + "Percent Change: " + ChatColor.RED + "%" + Double.toString(change));
         } else {
-            Lore.add(ChatColor.WHITE + "Percent Change: " + ChatColor.GREEN + "%" + CoinMap.get("changePercent24Hr").toString());
+            Lore.add(ChatColor.WHITE + "Percent Change: " + ChatColor.GREEN + "%" + Double.toString(change));
         }
         Lore.add(ChatColor.BLACK + ".");
         Lore.add(ChatColor.YELLOW + "ID: " + ChatColor.WHITE + "$" + CoinMap.get("id").toString());

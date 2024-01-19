@@ -8,7 +8,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class MenuBarObject {
 	
-	@SuppressWarnings("unused")
 	private ItemStack ItemRepresentation;
 	
 	public MenuBarObject(Material material, ChatColor chatcolor, String text) {
