@@ -4,7 +4,7 @@
 ![Spigot](https://img.shields.io/badge/Spigot-1.20.2-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-![DALL·E 2024-04-09 18 47 37 - Design a logo for a Minecraft cryptocurrency plugin  The logo should incorporate Minecraft's iconic pixelated style, featuring a stylized coin with th](https://github.com/s5y-ux/CryptoCraft/assets/59636597/9b19f7c5-7814-4415-a79b-eabcd19eceea)
+![CryptoCraftLogo](https://github.com/s5y-ux/CryptoCraft/assets/59636597/813799d0-ccb5-449b-a4e7-227cec9f18ae)
 
 Welcome to CryptoCraft, the ultimate Bukkit plugin for adding a virtual cryptocurrency trading system to your Minecraft server! Dive into the exciting world of crypto trading right from within your favorite game. With CryptoCraft, players can buy, sell, and trade virtual coins, experiencing the thrill of real-world cryptocurrency markets without ever leaving Minecraft.
 
