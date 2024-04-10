@@ -44,5 +44,3 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## Acknowledgements
 
 Special thanks to the Bukkit community and all contributors who help make CryptoCraft possible.
-
-[![Build Status](https://img.shields.io/travis/user/repo.svg)](https://travis-ci.org/user/repo)
