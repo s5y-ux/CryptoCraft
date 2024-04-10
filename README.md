@@ -1,4 +1,4 @@
-### CryptoCraft Plugin
+# CryptoCraft Plugin
 
 Welcome to CryptoCraft, the ultimate Bukkit plugin for adding a virtual cryptocurrency trading system to your Minecraft server! Dive into the exciting world of crypto trading right from within your favorite game. With CryptoCraft, players can buy, sell, and trade virtual coins, experiencing the thrill of real-world cryptocurrency markets without ever leaving Minecraft.
 
