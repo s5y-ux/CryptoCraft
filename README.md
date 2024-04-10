@@ -1,7 +1,7 @@
 # 🚀 CryptoCraft Plugin 🚀
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.20+-brightgreen.svg)
-![Spigot](https://img.shields.io/badge/Spigot-1.20.2-orange.svg)
+![Spigot](https://img.shields.io/badge/Paper-1.20+-white.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ![500px](https://github.com/s5y-ux/CryptoCraft/assets/59636597/8b04933c-1496-4dd4-a4d4-e689f489d410)
