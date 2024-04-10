@@ -4,7 +4,7 @@
 ![Spigot](https://img.shields.io/badge/Spigot-1.20.2-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
-![CryptoCraftLogo](https://github.com/s5y-ux/CryptoCraft/assets/59636597/813799d0-ccb5-449b-a4e7-227cec9f18ae)
+![500px](https://github.com/s5y-ux/CryptoCraft/assets/59636597/8b04933c-1496-4dd4-a4d4-e689f489d410)
 
 Welcome to CryptoCraft, the ultimate Bukkit plugin for adding a virtual cryptocurrency trading system to your Minecraft server! Dive into the exciting world of crypto trading right from within your favorite game. With CryptoCraft, players can buy, sell, and trade virtual coins, experiencing the thrill of real-world cryptocurrency markets without ever leaving Minecraft.
 
