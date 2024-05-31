@@ -1,5 +1,6 @@
 package net.ddns.vcccd;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -7,14 +8,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import net.md_5.bungee.api.ChatColor;
 import java.util.List;
 
 public class CoinGUIEvents implements Listener {
 
     private final Main main;
     private String pluginPrefix = ChatColor.translateAlternateColorCodes('&', "&f[&eCryptoCraft&f] ");
-    		
+
     public CoinGUIEvents(Main main) {
         this.main = main;
     }
@@ -60,7 +60,7 @@ public class CoinGUIEvents implements Listener {
             double coinPrice = GetPrice(coin);
 
             PlayerData playerCoinData = new PlayerData(main, player);
-            if (playerCoinData.Sell(CoinCode, amount)) {
+            if (new JsonQuantityRemove(player, CoinCode, amount, main).isSuccessful()) {
                 // Deposit the coin price to player's balance
                 Main.getEconomy().depositPlayer(player, coinPrice);
                 // Notify the player about the transaction
@@ -82,7 +82,11 @@ public class CoinGUIEvents implements Listener {
             if (lore != null && lore.size() >= 2) {
                 String amountString = lore.get(1).split(" ")[1];
                 int amount = Integer.parseInt(amountString.substring(2));
-                playerCoinData.Purchase(lore.get(0).substring(2), amount);
+
+                new JsonQuantityAdd(player, lore.get(0).substring(2), amount, main);
+                //playerCoinData.Purchase(lore.get(0).substring(2), amount);
+
+                player.sendMessage("Test");
                 // Notify the player about the purchase and remaining balance
                 player.sendMessage(pluginPrefix + ChatColor.WHITE + "You Now Have" + ChatColor.GREEN + " $" + round(Main.getEconomy().getBalance(player), 2) + ChatColor.WHITE + " Left In Your Account...");
             }

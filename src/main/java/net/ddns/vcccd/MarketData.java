@@ -21,6 +21,11 @@ is bad and don't abuse this API because it is awesome and you
 shoulden't ruin it for the rest of us.
 
 Thank you :)
+
+(To the spigot staff reviewing the code, I have backup public APIS in
+case of a worst case event - [Shutdown of the API])
+
+The code is made to call this class as little as possible
 */
 
 public class MarketData {
