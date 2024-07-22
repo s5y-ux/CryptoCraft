@@ -15,22 +15,22 @@ import org.bukkit.entity.Player;
 public class MenuAccessor implements CommandExecutor{
 	
 	private final Main main;
-	
-	/**
-	 * Constructor for MenuAccessor class.
-	 * 
-	 * @param main The main plugin instance
-	 */
 	public MenuAccessor(Main main) {
 		this.main = main;
 	}
 	
 	@Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		
+		// If the person sending the command is a player,
+		// Open up the menu
 		if(sender instanceof Player) {
+			
 			Player player = (Player) sender;
 			MainGUI GUI = new MainGUI(player, main);
 			player.openInventory(GUI.getGUI());
+			
+		// Otherwise, deny access.
 		} else {
 			sender.sendMessage(ChatColor.RED + "The Crypto Menu can only be accessed by a player...");
 		}

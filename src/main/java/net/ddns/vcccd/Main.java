@@ -28,7 +28,7 @@ public class Main extends JavaPlugin {
 	private ConsoleCommandSender console = getServer().getConsoleSender();
 	
 	// Prefix for plugin messages
-	private String prefix = ChatColor.translateAlternateColorCodes('&', "&f[&eCryptoCraft&f] - ");
+	public final String prefix = ChatColor.translateAlternateColorCodes('&', "&f[&eCryptoCraft&f] - ");
 	
 	// Connection to the SQLite database
 	private Connection publicConnection;
@@ -101,9 +101,6 @@ public class Main extends JavaPlugin {
         }
         setupPermissions();
         setupChat();
-		
-		// Inform that the plugin is enabled
-		console.sendMessage(ChatColor.GREEN + "Stock Market Plugin Enabled...");
 		
 		// Load configuration
 		FileConfiguration config = this.getConfig();

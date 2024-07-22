@@ -13,7 +13,6 @@ import java.util.List;
 public class CoinGUIEvents implements Listener {
 
     private final Main main;
-    private String pluginPrefix = ChatColor.translateAlternateColorCodes('&', "&f[&eCryptoCraft&f] ");
 
     public CoinGUIEvents(Main main) {
         this.main = main;
@@ -32,39 +31,70 @@ public class CoinGUIEvents implements Listener {
     }
 
     // Retrieve the price from the lore of the clicked item
+    // Again, we are trying to probe the API as little as possible
     private double GetPrice(ItemMeta ClickedItemData) {
         List < String > lore = ClickedItemData.getLore();
+        
+        //TODO I wrote this a long time ago, I'd imagine if lore is null < 2.
+        //I'm going to come back and see if I can simplify this
         if (lore != null && lore.size() > 2) {
+        	
+        	//We get the price via the Lore
             String primaryValue = lore.get(2);
             String[] splitValueArray = primaryValue.split(" ");
+            
             if (splitValueArray.length > 1) {
+            	
+            	//Then we get the non color coded price (String)
                 String floatingPointString = splitValueArray[1].substring(3);
+                
                 try {
+                	
+                	//We parse this into a usable value with the economy
                     return Double.parseDouble(floatingPointString);
                 } catch (NumberFormatException e) {
-                    // Log error or handle it accordingly
-                    return 0.0;
+                	
+                    // Log error and handle it accordingly
+                	main.getConsole().sendMessage(main.prefix + ChatColor.RED + "Error -> CoinGUIEvents class " + ChatColor.YELLOW + "Contact Developer...");
+                	main.getConsole().sendMessage(main.prefix + "GetPrice()");
+                	return 0.0;
+                 
                 }
             }
         }
         return 0.0; // Return default value if parsing fails or lore is not as expected
+        //This is very unlikely to happen
     }
 
     // Sell the specified amount of coins and add the corresponding price to the player's balance
     private void SellCoin(Player player, ItemMeta coin) {
+    	
+    	//Referencing the lore once again (Minimal API Calls)
         List < String > lore = coin.getLore();
         if (lore != null && lore.size() >= 2) {
+        	
+        	// We get the amount of coins to buy
             String amountString = lore.get(1).split(" ")[1].substring(2);
             int amount = Integer.parseInt(amountString);
+            
+            // We get the acronym for the coin (For the database)
             String CoinCode = lore.get(0).substring(2);
+            
+            // We then get the price of the coin with the method
             double coinPrice = GetPrice(coin);
 
-            PlayerData playerCoinData = new PlayerData(main, player);
+            // Instantiate the database information TODO (Will probably revise this system in a new update)
+            @SuppressWarnings("unused")
+			PlayerData playerCoinData = new PlayerData(main, player);
+            
+            // Finally we call our separate class for handling database transactions
             if (new JsonQuantityRemove(player, CoinCode, amount, main).isSuccessful()) {
+            	
                 // Deposit the coin price to player's balance
                 Main.getEconomy().depositPlayer(player, coinPrice);
+                
                 // Notify the player about the transaction
-                player.sendMessage(pluginPrefix + ChatColor.GREEN + "$" + round(coinPrice, 2) + ChatColor.WHITE + " has been added to your account!");
+                player.sendMessage(main.prefix + ChatColor.GREEN + "$" + round(coinPrice, 2) + ChatColor.WHITE + " has been added to your account!");
             }
         }
     }
@@ -73,24 +103,44 @@ public class CoinGUIEvents implements Listener {
     private void PurchaseCoin(Player player, double Price, double Balance, ItemMeta coin) {
         if (Balance < Price) {
             // Notify the player about insufficient funds
-            player.sendMessage(pluginPrefix + ChatColor.RED + "Insufficient Funds");
+            player.sendMessage(main.prefix + ChatColor.RED + "Insufficient Funds");
         } else {
             // Withdraw the price from player's balance
             Main.getEconomy().withdrawPlayer(player, Price);
+            
+         // Instantiate the database information TODO (Will probably revise this system in a new update)
+            @SuppressWarnings("unused")
             PlayerData playerCoinData = new PlayerData(main, player);
+            
+            //Once again, retrieves the lore from the item stack
             List < String > lore = coin.getLore();
             if (lore != null && lore.size() >= 2) {
+            	
+            	// Gets the amount of the coin purchased from the lore
                 String amountString = lore.get(1).split(" ")[1];
+                
+                //parses the amount without the color code
                 int amount = Integer.parseInt(amountString.substring(2));
 
+                // Adds the quantity when the class is instantiated TODO (I need to learn more about SQLite and how to connect to the database
+                // and employ different methods through one connection.)
                 new JsonQuantityAdd(player, lore.get(0).substring(2), amount, main);
-                //playerCoinData.Purchase(lore.get(0).substring(2), amount);
 
-                player.sendMessage("Test");
                 // Notify the player about the purchase and remaining balance
-                player.sendMessage(pluginPrefix + ChatColor.WHITE + "You Now Have" + ChatColor.GREEN + " $" + round(Main.getEconomy().getBalance(player), 2) + ChatColor.WHITE + " Left In Your Account...");
+                player.sendMessage(main.prefix + ChatColor.WHITE + "You Now Have" + ChatColor.GREEN + " $" + round(Main.getEconomy().getBalance(player), 2) + ChatColor.WHITE + " Left In Your Account...");
             }
         }
+        
+        /*
+         * One thing to note about this method is the use of
+         * the instantiation of the Json methods. The purchase
+         * coin method has four parameters while the sell has two.
+         * This is because the players balance and the price are
+         * set as parameters TODO in a new update, make the purchase
+         * have two like the sell coin and use getter methods for the
+         * balance and the conversion method for the coin price. This
+         * could help if I ever decide to go open source.
+         */
     }
 
     // Handle inventory click events
@@ -105,11 +155,16 @@ public class CoinGUIEvents implements Listener {
 
                 // Check if the clicked item is a buy or sell pane
                 if (checkMaterial(ClickedItem, Material.LIME_STAINED_GLASS_PANE)) {
+                	
                     // Retrieve price and balance, then attempt to purchase
+                	// TODO as said before, just allow the PurchaseCoin method to get price and balance
+                	// from the player and ItemMeta...
                     double price = GetPrice(ClickedItemData);
                     double balance = Main.getEconomy().getBalance(player);
                     PurchaseCoin(player, price, balance, ClickedItemData);
+                    
                 } else if (checkMaterial(ClickedItem, Material.YELLOW_STAINED_GLASS_PANE)) {
+                	
                     // If clicked item is a sell pane, attempt to sell coins
                     SellCoin(player, ClickedItemData);
                 }
@@ -118,6 +173,8 @@ public class CoinGUIEvents implements Listener {
             }
         } catch (Exception e) {
             // Properly log or handle any unexpected exceptions
+        	main.getConsole().sendMessage(main.prefix + ChatColor.RED + "Error -> CoinGUIEvents class " + ChatColor.YELLOW + "Contact Developer...");
+        	main.getConsole().sendMessage(main.prefix + "onMenuSelect()");
         }
     }
 }

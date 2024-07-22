@@ -14,22 +14,16 @@ import net.md_5.bungee.api.ChatColor;
  */
 public class MainGUIEvents implements Listener {
 	
-	/**
-	 * Checks if the ItemStack is of a certain Material.
-	 * 
-	 * @param item The ItemStack to check
-	 * @param material The Material to compare with
-	 * @return True if the ItemStack is of the specified Material, otherwise false
+	/*
+	 * Super straightforward code, 
+	 * is it a coin? -> open coin menu...
+	 * No? -> send respective message...
 	 */
+	 
 	private boolean checkMaterial(ItemStack item, Material material) {
 		return item.getType().equals(material);
 	}
-	
-	/**
-	 * Handles click events on the main GUI.
-	 * 
-	 * @param event The InventoryClickEvent
-	 */
+
 	@EventHandler
 	public void onGlassPaneClick(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();

@@ -15,43 +15,36 @@ public class SelectionPane {
 	
 	private ItemStack Pane;
 	
-	/**
-	 * Constructor for SelectionPane class.
-	 * 
-	 * @param PaneType The type of material for the pane
-	 * @param color The color of the pane
-	 * @param name The name of the pane
-	 * @param amount The amount of the selected item
-	 * @param Coin The selected coin item
-	 */
+	// This basically creates the item representation of the buy or sell panes in the GUI
 	public SelectionPane(Material PaneType, ChatColor color, String name, long amount, ItemStack Coin) {
+		
+		// Creates the Item of the pane type
 		ItemStack ReturnPane = new ItemStack(PaneType);
+		
+		// Gets the item meta and updates it with the price and amount
 		ItemMeta PaneData = ReturnPane.getItemMeta();
 		ArrayList<String> Lore = new ArrayList<String>();
 		Lore.add(Coin.getItemMeta().getLore().get(1).split(" ")[1]);
 		Lore.add(ChatColor.YELLOW + "Amount: " + ChatColor.WHITE + Long.toString(amount));
 		Lore.add(ChatColor.YELLOW + "Price: " + ChatColor.GREEN + "$" + PriceAmount(getPrice(Coin), amount));
+		
+		// Sets the name to buy or sell and updates the Lore
 		PaneData.setDisplayName(color + name);
 		PaneData.setLore(Lore);
+		
+		// Sets all the info to the item
 		ReturnPane.setItemMeta(PaneData);
+		
+		// Finally, it sets the private ItemStack attribute to the pane.
 		Pane = ReturnPane;
 	}
 	
-	/**
-	 * Retrieves the selection pane item.
-	 * 
-	 * @return The selection pane item
-	 */
+	// Getter method for the private ItemStack
 	public ItemStack getItem() {
 		return Pane;
 	}
 	
-	/**
-	 * Retrieves the price of the selected coin.
-	 * 
-	 * @param Coin The selected coin item
-	 * @return The price of the coin
-	 */
+	// TODO update this to work as long, but for now returns a string representation of the price
 	private String getPrice(ItemStack Coin) {
 		ItemMeta CoinData = Coin.getItemMeta();
 		ArrayList<String> Data = (ArrayList<String>) CoinData.getLore();
@@ -60,13 +53,7 @@ public class SelectionPane {
 		return trueVal[1].substring(3);
 	}
 	
-	/**
-	 * Calculates the total price based on the price of the coin and the selected amount.
-	 * 
-	 * @param price The price of the coin
-	 * @param amount The selected amount
-	 * @return The total price
-	 */
+	// Calculate the transaction price by the coin quantity and multiply it by the price of the coin
 	private String PriceAmount(String price, long amount) {
 		float value = Float.parseFloat(price) * (float) amount;
 		return Float.toString(value);

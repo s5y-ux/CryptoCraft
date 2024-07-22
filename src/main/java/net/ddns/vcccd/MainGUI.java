@@ -1,7 +1,5 @@
 package net.ddns.vcccd;
 
-import net.ddns.vcccd.CryptoMenuOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 
 
 //Constructor for the MainGUI or head node in the Menu Linked List
-@SuppressWarnings("unused")
 public class MainGUI {
 	
 	private Player player;

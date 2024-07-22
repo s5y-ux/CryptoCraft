@@ -10,32 +10,33 @@ import org.bukkit.entity.Player;
 
 
 /**
- * Class for managing player data.
+ * Class for Instantiating Players existence in the database
  */
 public class PlayerData {
 	
-	private Connection conn;
-	private final Main main;
-	
-	/**
-	 * Constructor for PlayerData class.
-	 * 
-	 * @param main The main plugin instance
-	 * @param player The player
+	/*
+	 * Takes the main class and the player,
+	 * finds the UUID and then inserts it into
+	 * the Database
 	 */
 	public PlayerData(Main main, Player player) {
-		this.main = main;
+		
+		//gets the UUID of the player
 	    UUID uniqueId = player.getUniqueId();
 	    String idString = uniqueId.toString();
-	    this.conn = this.main.getPublicConnection();
+	    
+	    //Gets the connection
+	    Connection conn = main.getPublicConnection();
 	    
 	    try {
-	        Statement sqlExecutors = this.conn.createStatement();
+	    	
+	    	//Selects all the data with the UUID (Just trying to find an instance of that UUID)
+	        Statement sqlExecutors = conn.createStatement();
 	        String retrieveDataSQL = "SELECT * FROM PlayerData WHERE UUID = '" + idString + "'";
 	        ResultSet resultSet = sqlExecutors.executeQuery(retrieveDataSQL);
 
+	        // If no data found, insert blank data
 	        if (!resultSet.next()) {
-	            // If no data found, insert new data
 	            String insertData = "INSERT INTO PlayerData (UUID, Wallet) VALUES ('" + idString + "', '{}')";
 	            sqlExecutors.execute(insertData);
 	        }
@@ -43,10 +44,11 @@ public class PlayerData {
 	        // Close resources
 	        resultSet.close();
 	        sqlExecutors.close();
+	        
 	    } catch (SQLException e) {
 	        // Handle SQL exception
 	        e.printStackTrace();
-	        this.main.getConsole().sendMessage("An error occurred during PlayerData initialization.");
+	        main.getConsole().sendMessage(main.prefix + "An error occurred during PlayerData initialization.");
 	    }
 	}
 }

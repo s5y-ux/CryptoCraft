@@ -17,41 +17,58 @@ import com.google.gson.JsonObject;
 public class JsonQuantityRemove {
 	private final Main main;
 	private Connection conn;
-	private String pluginPrefix = ChatColor.translateAlternateColorCodes('&', "&f[&eCryptoCraft&f] ");
 	private boolean Trigger;
 	
-	/**
-	 * Constructor for JsonQuantityRemove class.
-	 * 
-	 * @param player The player to remove the coins from
-	 * @param coin The name of the coin
-	 * @param saleAmount The amount of the coin to remove
-	 * @param main The main plugin instance
+	/*
+	 * Very similar to quantity add, but now
+	 * it removes coins. A little bit more in game
+	 * communication and logic though.
 	 */
+	
 	public JsonQuantityRemove(Player player, String coin, int saleAmount, Main main) {
 		this.main = main;
+		
+		// Gets the UUID as varchar and the connection
 		UUID uniqueId = player.getUniqueId();
 	    String idString = uniqueId.toString();
 	    this.conn = this.main.getPublicConnection();
 	    Statement sqlExecutors;
+	    
+	    
 	    try {
-	    	sqlExecutors = this.conn.createStatement();
+	    	
+	    	// Get the JSON data from the respective player UUID
+	    	sqlExecutors = conn.createStatement();
 	    	String retrieveDataSQL = "SELECT Wallet FROM PlayerData WHERE UUID = '" + idString + "'";
 	        ResultSet resultSet = sqlExecutors.executeQuery(retrieveDataSQL);
+	        
+	        // The resultSet.next() will always have info unless
+	    	// changed in the Events class
 	    	if (!resultSet.next()) {
-	            player.sendMessage(pluginPrefix + ChatColor.RED + "You haven't purchased any coins.");
-	        } else {
-	            // If data found, update existing data
+	            player.sendMessage(main.prefix + ChatColor.RED + "You haven't purchased any coins.");
+	        } 
+	    	
+	    	// If data found, update existing data
+	    	else {
+	            
+	    		// Gets the wallet column from the Database and handles it as JsonObject
 	        	String coinsData = resultSet.getString("Wallet");
 	            Gson gson = new Gson();
 	            JsonObject coinsObject = gson.fromJson(coinsData, JsonObject.class);
+	            
+	            //If the waller doesn't have the coin code say they don't have the coin
 	            if (!coinsObject.has(coin)) {
-	                player.sendMessage(pluginPrefix + ChatColor.RED + "You have none of that type of coin...");
+	                player.sendMessage(main.prefix + ChatColor.RED + "You have none of that type of coin...");
 	                this.Trigger = false;
+	                
+	            // If the object does have the coin code, but not enough for the sale relay the information
 	            } else if (coinsObject.get(coin).getAsInt() < saleAmount) {
-	                // Check if the player has enough of the specified coin to sell
-	                player.sendMessage(pluginPrefix + ChatColor.RED + "You don't have " + saleAmount + " " + coin + ". You only have " + coinsObject.get(coin).getAsInt());
+	                player.sendMessage(main.prefix + ChatColor.RED + "You don't have " + saleAmount + " " + coin + ". You only have " + coinsObject.get(coin).getAsInt());
 	                this.Trigger = false;
+	                
+	                // TODO if the coin code is in the wallet, but they have zero, it will say they have zero
+	                // so it should probably be included in the logic of the (!coin) by (!coin or coinsObject.get(coin).getAsInt() == 0) 
+	                
 	            } else {
 	                // Subtract the sold amount from the player's coins
 	                int currentAmount = coinsObject.get(coin).getAsInt();
@@ -73,6 +90,7 @@ public class JsonQuantityRemove {
 	 * Checks if the removal of coins was successful.
 	 * 
 	 * @return True if the removal was successful, otherwise false
+	 * this was determined by the logic of the constructor.
 	 */
 	public boolean isSuccessful() {
 		return this.Trigger;
