@@ -1,7 +1,5 @@
 # 🚀 CryptoCraft Plugin 🚀
-[![Watch the video on YouTube](https://img.youtube.com/vi/oDBK9DIVhls/0.jpg)](https://www.youtube.com/watch?v=oDBK9DIVhls)
-
-*Click the image above to watch the video on YouTube.*
+[![Watch the video](https://img.youtube.com/vi/oDBK9DIVhls/0.jpg)](https://www.youtube.com/watch?v=oDBK9DIVhls)
 
 ![Spigot](https://img.shields.io/badge/Paper-1.20+-white.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
