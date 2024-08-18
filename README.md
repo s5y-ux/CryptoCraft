@@ -31,9 +31,9 @@ Welcome to CryptoCraft, the ultimate Bukkit plugin for adding a virtual cryptocu
 
 To open the CryptoCraft trading interface, simply use the provided command in-game:
 
-\```
+```
 /crypto - Opens the trading menu
-\```
+```
 
 From there, players can browse available coins, view market prices, and make trades.
 
