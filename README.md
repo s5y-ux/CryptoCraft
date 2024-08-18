@@ -1,7 +1,7 @@
 # ✨ CryptoCraft ✨ (API for Real World Market Data ⚙️) - SQL Database for wallets ✅
 <center>
   
-[![Watch the video](https://img.youtube.com/vi/oDBK9DIVhls/0.jpg)](https://www.youtube.com/watch?v=oDBK9DIVhls)
+![7107e4b2-e8bf-46f8-8edc-70ede71f5bb5](https://github.com/user-attachments/assets/b086ac69-d2fc-4ac0-9d57-9ffee5dda386)
 
 ![Paper](https://img.shields.io/badge/Paper-1.20+-white.svg) ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
