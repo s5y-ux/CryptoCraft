@@ -53,3 +53,7 @@ This project is licensed under the [MIT License](https://opensource.org/license/
 ## Acknowledgements
 
 Special thanks to the Bukkit community and all contributors who help make CryptoCraft possible.
+
+
+![Add a subheading](https://github.com/user-attachments/assets/dde1dae9-4fcd-4502-8efa-f8173a4329b6)
+
