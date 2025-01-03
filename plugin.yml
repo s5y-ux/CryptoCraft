@@ -1,10 +1,10 @@
 name: CryptoCraft
 main: net.ddns.vcccd.Main
-version: 1.0.0
-api-version: 1.20
+version: 1.0.2
+api-version: "1.20"
 depend: [Vault]
 commands:
    crypto:
       description: Opens the crypto currency trading menu
       usage: /<command>
-      permission: cryptocraft.use
+      permjava ission: cryptocraft.use

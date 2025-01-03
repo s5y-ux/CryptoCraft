@@ -1,10 +1,12 @@
 package net.ddns.vcccd;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 
 /**
  * Class for handling command that access the menu.
@@ -29,6 +31,17 @@ public class MenuAccessor implements CommandExecutor{
 			Player player = (Player) sender;
 			MainGUI GUI = new MainGUI(player, main);
 			player.openInventory(GUI.getGUI());
+			BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+			scheduler.scheduleSyncDelayedTask(main, new Runnable() {
+                @Override
+                public void run() {
+                	if(player.getOpenInventory().getTitle().equals("Buy | Sell") || player.getOpenInventory().getTitle().equals("Cryptocurrency")) {
+        				player.closeInventory();
+        				player.sendMessage(main.prefix + ChatColor.RED + "Possible price change, please re-open the menu...");
+        			}
+                }
+            }, 3600);
+			
 			
 		// Otherwise, deny access.
 		} else {

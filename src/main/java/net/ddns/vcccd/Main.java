@@ -111,6 +111,7 @@ public class Main extends JavaPlugin {
 		this.getCommand("crypto").setExecutor(new MenuAccessor(this));
 		getServer().getPluginManager().registerEvents(new MainGUIEvents(), this);
 		getServer().getPluginManager().registerEvents(new CoinGUIEvents(this), this);
+		getServer().getPluginManager().registerEvents(new UpdateChecker(), this);
 		
 		// Check and create database file if not exists
 		File rootDirectory = new File("plugins/CryptoCraft/PlayerData.db");
